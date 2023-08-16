@@ -1,0 +1,71 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=\, initial-scale=1.0"/>
+    <link rel="stylesheet" href="{% static 'styles/styles.css'%}"/>
+    <title>Fruitipedia</title>
+</head>
+<body>
+<div id="wrapper">
+    <header>
+        <!-- Navigation -->
+        <a id="logo" href="{% url 'index' %}">
+            <img id="logo-img" src="{% static 'images/logo.png' %}" alt="logo"/>
+        </a>
+
+        <nav>
+
+            <!-- If there is a user profile -->
+            {% if profile %}
+            <div class="user">
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'fruit_create' %}">Add Fruit</a>
+                <a href="{% url 'profile_details' %}">Profile</a>
+            </div>
+            {% else %}
+            <!-- If user profile has NOT been created -->
+            <div class="guest">
+
+                <a href="{% url 'profile_create' %}">Create Profile</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Edit Fruit Form -->
+        <section id="edit">
+            <div class="form">
+                <h2>Edit Fruit</h2>
+            <form class="edit-form" method="post" action="{% url 'fruit_edit' fruit.id %}">
+                {% csrf_token %}
+                <label for="id_name">Name:</label>
+                {{ form.name }}
+
+                <label for="id_image_url">Image URL:</label>
+                {{ form.image_url }}
+
+                <label for="id_description">Description:</label>
+                {{ form.description }}
+
+                <label for="id_nutrition">Nutrition:</label>
+                {{ form.nutrition }}
+
+                <button type="submit">Edit</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+</div>
+<!-- footer -->
+<footer>
+    <p>@Fruitipedia - SoftUni Team 2023. All rights reserved.</p>
+</footer>
+</body>
+</html>
